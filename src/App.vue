@@ -16,6 +16,7 @@
     </v-toolbar>
 
     <v-content>
+      <MainMenu/>
       <HelloWorld/>
     </v-content>
   </v-app>
@@ -23,11 +24,13 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
+import MainMenu from './views/MainMenu'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    MainMenu
   },
   data () {
     return {
