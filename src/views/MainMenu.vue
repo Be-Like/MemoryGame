@@ -39,7 +39,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="savePlayerInfo; dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" flat @click="savePlayerInfo(playerForm); dialog = false">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -63,7 +63,7 @@ export default {
     }),
     computed: {
       getPlayerForm() {
-        return this.$store.state.playerOneName;
+        return this.$store.state.playerForm.playerOneName;
       },
       getRandomTest() {
         return this.$store.getters.getRandomTest;
@@ -73,8 +73,8 @@ export default {
       testAlert(string) {
         alert(string);
       },
-      savePlayerInfo() {
-        this.$$store.commit('updatePlayerNames', playerForm.playerOneName);
+      savePlayerInfo(playerInfo) {
+        this.$store.commit('updatePlayerNames', playerInfo);
       }
     }
 }

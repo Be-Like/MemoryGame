@@ -6,15 +6,15 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     randomTest: 'just another test',
-    // playerForm: {
-    //   playerOneName: 'Jake',
-    //   playerTwoName: 'Simpson'
-    // }
-    playerOneName: 'Jake'
+    playerForm: {
+      playerOneName: 'Jake',
+      playerTwoName: 'Simpson'
+    }
+    // playerOneName: 'Jake'
   },
   mutations: {
-    updatePlayerNames(state, data) {
-      state.playerOneName = data
+    updatePlayerNames(state, playerForm) {
+      state.playerForm = playerForm
     }
   },
   actions: {
