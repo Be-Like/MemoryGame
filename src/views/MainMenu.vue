@@ -10,7 +10,7 @@
           class="subeading mx-3"
           target="_blank">
       <v-layout justify-center id="maxButtonWidth">
-        <v-btn block flat @click="testAlert(getPlayerForm)">
+        <v-btn block flat :to="mode.url" active-class="inactive">
           {{ mode.text }}
         </v-btn>
       </v-layout>
@@ -29,17 +29,17 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12 sm6 md6>
-              <v-text-field label="Player 1 Name" v-model="playerForm.playerOneName"/>
+              <v-text-field :rules="[rules.required]" label="Player 1 Name" v-model="playerForm.playerOneName"/>
             </v-flex>
             <v-flex xs12 sm6 md6>
-              <v-text-field label="Player 2 Name"/>
+              <v-text-field :rules="[rules.required]" label="Player 2 Name" v-model="playerForm.playerTwoName"/>
             </v-flex>
           </v-layout>
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click="savePlayerInfo(playerForm); dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" :disabled="isValidPlayerInfo" flat @click="savePlayerInfo(playerForm)">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -49,11 +49,14 @@
 <script>
 export default {
     data: () => ({
+      rules: {
+          required: value => !!value || 'Required.',
+      },
       gameModes: [
-        {text: 'Easy'},
-        {text: 'Medium'},
-        {text: 'Hard'}, 
-        {text: 'Absurd'}
+        {text: 'Easy', url: 'easy'},
+        {text: 'Normal', url: 'normal'},
+        {text: 'Hard', url: '/'}, 
+        {text: 'Absurd', url: '/'}
       ],
       dialog: false,
       playerForm: {
@@ -63,18 +66,34 @@ export default {
     }),
     computed: {
       getPlayerForm() {
-        return this.$store.state.playerForm.playerOneName;
+        return this.$store.state.playerForm;
       },
       getRandomTest() {
         return this.$store.getters.getRandomTest;
+      },
+      isValidPlayerInfo() {
+        var user1 = this.playerForm.playerOneName;
+        var user2 = this.playerForm.playerTwoName;
+
+        if (user1 && user2) {
+          return false;
+        } else {
+          return true;
+        }
       }
     },
     methods: {
-      testAlert(string) {
-        alert(string);
+      testAlert(player) {
+        alert(JSON.stringify(player));
       },
       savePlayerInfo(playerInfo) {
-        this.$store.commit('updatePlayerNames', playerInfo);
+        var user1 = playerInfo.playerOneName;
+        var user2 = playerInfo.playerTwoName;
+
+        if (user1 && user2) {
+          this.$store.commit('updatePlayerNames', playerInfo);
+          this.dialog = false;          
+        }
       }
     }
 }

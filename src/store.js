@@ -7,10 +7,9 @@ export default new Vuex.Store({
   state: {
     randomTest: 'just another test',
     playerForm: {
-      playerOneName: 'Jake',
-      playerTwoName: 'Simpson'
+      playerOneName: 'Player1',
+      playerTwoName: 'Player2'
     }
-    // playerOneName: 'Jake'
   },
   mutations: {
     updatePlayerNames(state, playerForm) {
