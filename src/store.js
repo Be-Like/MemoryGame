@@ -24,7 +24,7 @@ export default new Vuex.Store({
       return state.randomTest
     },
     getPlayerForm(state) {
-      return state.playerOneName
+      return state.playerForm;
     }
   }
 })

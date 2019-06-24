@@ -1,3 +1,3 @@
 <template>
-  <h2>Welcom to an Medium Game of Memory</h2>
+  <router-link tag="h2" to="/"> Welcom to an Medium Game of Memory</router-link>
 </template>

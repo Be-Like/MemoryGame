@@ -55,7 +55,7 @@ export default {
       gameModes: [
         {text: 'Easy', url: 'easy'},
         {text: 'Normal', url: 'normal'},
-        {text: 'Hard', url: '/'}, 
+        {text: 'Hard', url: '/hard'}, 
         {text: 'Absurd', url: '/'}
       ],
       dialog: false,
