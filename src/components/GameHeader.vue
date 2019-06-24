@@ -16,6 +16,9 @@ export default {
     player1Score: 0,
     player2Score: 0
   }),
+  methods: {
+    
+  },
   mounted() {
     this.playerForm = this.$store.getters.getPlayerForm;
   }
