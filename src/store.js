@@ -17,7 +17,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
-
+    revealCard({commit}, card) {
+      commit('reveal', card)
+    }
   }, 
   getters: {
     getRandomTest(state) {

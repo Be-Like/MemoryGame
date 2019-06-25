@@ -1,13 +1,16 @@
 <template>
-  <card></card>
+  <v-container>
+    <h2>Hello Board Setup</h2>
+    <game-card/>
+  </v-container>
 </template>
 
 <script>
-import Card from './Cards';
+import GameCard from './GameCard.vue';
 
 export default {
   components: {
-    Card
+    GameCard
   }
 }
 </script>
