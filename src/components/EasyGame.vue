@@ -11,7 +11,6 @@
 <script>
 import GameHeader from './GameHeader.vue';
 import BoardSetup from './BoardSetup.vue';
-import {shuffle} from '../logic/shuffle.js';
 import {mapActions, mapGetters} from 'vuex';
 
 export default {
@@ -24,16 +23,11 @@ export default {
   },
   methods: {
     ...mapActions(['reset']),
-    resetGame() {
-      const cardNames = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'card7', 'card8'];
-      var shuffledCards = shuffle(cardNames.concat(cardNames)).map(name => ({revealed: false, cardName: name}));
-      this.$store.commit('updateCards', shuffledCards);
-    },
     showCards() {
-      alert(this.getCards);
+      alert(JSON.stringify(this.getCards));
     }
   },
-  created() {
+  mounted() {
     this.reset();
   }
 }

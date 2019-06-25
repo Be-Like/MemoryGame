@@ -1,7 +1,6 @@
 <template>
   <v-container class="boardSetup">
-    <h2>Hello Board Setup</h2>
-    <game-card v-for="(card, index) of getCards" :key="index" :selected="card"/>
+    <game-card v-for="(card, index) of getCards" :key="index" :selected="card" @revealed="onRevealed"/>
   </v-container>
 </template>
 
@@ -24,10 +23,26 @@ export default {
     ])
   }, 
   methods: {
-    ...mapActions(['flipCards'])
-    // onRevealed(revealedCard) {
-
-    // }
+    ...mapActions(['flipCards', 'cardsMatch']),
+    onRevealed(revealedCard) {
+      // if (this.status === STATUS.READY) {
+      //   this.updateStatus(STATUS.PLAYING);
+      // }
+      if (!this.lastCard) {
+        return (this.lastCard = revealedCard);
+      }
+      if (this.lastCard !== revealedCard 
+        && this.lastCard.cardName === revealedCard.cardName) {
+          this.lastCard = null;
+          this.cardsMatch(); // TODO: work on player turns (boolean or currentPlayer data or something along those lines)
+          return this.leftMatched; // TODO:uncomment this-> || this.updateStatus(STATUS.PASS);
+      }
+      const lastCard = this.lastCard;
+      this.lastCard = null;
+      setTimeout(() => {
+        this.flipCards([lastCard, revealedCard])
+      }, 1000);
+    }
   }
 }
 </script>
@@ -49,15 +64,15 @@ export default {
   .container:nth-child(4n) {
     margin-right: 0px;
   }
-  /* @media screen and (max-width: 450px) {
-    .chessboard {
+  @media screen and (max-width: 450px) {
+    .boardSetup {
       height: 480px;
       padding: 10px 0px;
     }
   }
   @media screen and (max-width: 370px) {
-    .chessboard {
+    .boardSetup {
       height: 450px;
     }
-  } */
+  }
 </style>
