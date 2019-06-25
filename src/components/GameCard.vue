@@ -1,10 +1,11 @@
 <template>
   <div class="cardContainer"  @click="reveal">
-    <div class="card">
-      <img class="revealed" src="../assets/EasyImages/easyImage1.jpg"/>
-      <img class="revealed" src="../assets/EasyImages/easyImage2.jpg"/>
+    <h2>Figuring this Out</h2>
+    <div class="card" :class="{revealed: selected.revealed}">
+      <img class="faceUp" src="../assets/EasyImages/easyImage1.jpg"/>
+      <img class="faceUp" src="../assets/EasyImages/easyImage2.jpg"/>
 
-      <img class="hidden" src="../assets/cardBack.jpg">
+      <img class="faceDown" src="../assets/cardBack.jpg">
     </div>
   </div>
 </template>
@@ -27,11 +28,13 @@ export default {
   methods: {
     ...mapActions(['revealCard']),
     reveal() {
-      if (this.option.revealed) {
+      if (this.selected.revealed) {
         return;
       }
-      this.revealCard(this.option);
-      this.$emit('revealed', this.option);
+      this.revealCard(this.selected);
+      this.$emit('revealed', this.selected);
+
+      alert(this.selected.revealed);
     }
   }
 }
@@ -62,10 +65,10 @@ export default {
   .card .selected {
     transform: rotateY(180deg);
   }
-  .card .revealed {
+  .card .faceUp {
     transform: rotateY(180deg);
   }
-  .card .hidden {
+  .card .faceDown {
     transform: rotateY(0deg);
   }
   /* @media screen and (max-width: 450px) {
