@@ -1,8 +1,8 @@
 <template>
   <v-container class="status-bar">
-    <h2>{{playerForm.playerOneName}}<br>{{getPlayerScore}}</h2>
+    <h2>{{playerOneInfo.name}}<br>{{playerOneInfo.score}}</h2>
     <div class="vr"></div>
-    <h2>{{playerForm.playerTwoName}}<br><div align="right">{{player2Score}}</div></h2>
+    <h2>{{playerTwoInfo.name}}<br><div align="right">{{playerTwoInfo.score}}</div></h2>
   </v-container>
 </template>
 
@@ -10,21 +10,26 @@
 import { mapGetters } from 'vuex';
 export default {
   data: () => ({
-    playerForm: {
-      playerOneName: '',
-      playerTwoName: ''
+    playerOneInfo: {
+      name: '',
+      score: 0
     },
-    player1Score: 0,
-    player2Score: 0
+    playerTwoInfo: {
+      name: '',
+      score: 0
+    }
   }),
   methods: {
     
   },
   computed: {
-    ...mapGetters(['getPlayerScore'])
+    ...mapGetters(['getPlayerOneInfo', 'getPlayerTwoInfo'])
   },
   mounted() {
-    this.playerForm = this.$store.getters.getPlayerForm;
+    this.playerOneInfo = this.getPlayerOneInfo;
+    this.playerTwoInfo = this.getPlayerTwoInfo;
+
+    // alert(JSON.stringify(this.playerOneInfo))
   }
 }
 </script>

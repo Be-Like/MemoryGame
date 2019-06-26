@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <router-link tag="h2" to="/">Welcom to an Easy Game of Memory</router-link>
+    <router-link tag="h2" to="/">Welcome to an Easy Game of Memory</router-link>
     <game-header/>
     <board-setup/>
     <v-btn @click="showCards"/>

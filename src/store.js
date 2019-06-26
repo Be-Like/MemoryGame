@@ -6,19 +6,32 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    playerForm: {
-      playerOneName: 'Player1',
-      playerTwoName: 'Player2'
+    playerOneInfo: { // TODO: fix up code to handle these instead
+      name: 'Player1',
+      turn: true,
+      score: 0
     },
-    cards: [],
-    playerOneScore: 0
+    playerTwoInfo: {
+      name: 'Player2',
+      turn: false,
+      score: 0
+    },
+    playersTurn: '',
+    cards: []
   },
   mutations: {
-    updatePlayerNames(state, playerForm) {
-      state.playerForm = playerForm;
+    setPlayerOneInfo(state, playerInfo) {
+      state.playerOneInfo.name = playerInfo.name;
+      state.playerOneInfo.score = playerInfo.score;
     },
-    updateCards(state, passedCardArray) {
+    setPlayerTwoInfo(state, playerInfo) {
+      state.playerTwoInfo.name = playerInfo.name;
+      state.playerTwoInfo.score = playerInfo.score;
+    },
+    resetBoard(state, passedCardArray) {
       state.cards = passedCardArray;
+      state.playerOneInfo.score = 0;
+      state.playerTwoInfo.score = 0;
     },
     reveal(state, card) {
       var c = state.cards.find(selectedCard => selectedCard === card);
@@ -28,11 +41,24 @@ export default new Vuex.Store({
       state.cards.filter(selectedCards => cards.indexOf(selectedCards) >= 0)
         .forEach(selectedCard => {selectedCard.revealed = !selectedCard.revealed});
     },
-    cardsMatch(state) {
-      state.playerOneScore++;
+    playerOneMatch(state) {
+      state.playerOneInfo.score++; // TODO: update score depending on whose turn it is
+    },
+    playerTwoMatch(state) {
+      state.playerTwoInfo.score++;
+    },
+    switchTurns(state, isTurn) {
+      state.playerOneInfo.turn = !isTurn;
+      state.playerTwoInfo.turn = isTurn;
     }
   },
   actions: {
+    setPlayerOneInfo({commit}, player) {
+      commit({commit}, player)
+    },
+    setPlayerTwoInfo({commit}, player) {
+      commit({commit}, player)
+    },
     flipCards({commit}, cards) {
       commit('flipCards', cards);
     },
@@ -42,18 +68,25 @@ export default new Vuex.Store({
     reset({commit}) {
       const cardNames = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'card7', 'card8'];
       var shuffledCards = shuffle(cardNames.concat(cardNames)).map(name => ({revealed: false, cardName: name}));
-      commit('updateCards', shuffledCards);
+      commit('resetBoard', shuffledCards);
     },
-    cardsMatch({commit}) {
-      commit('cardsMatch');
+    cardsMatch({commit}, player1) {
+      if (player1.turn) {
+        commit('playerOneMatch');
+      } else {
+        commit('playerTwoMatch')
+      }
+    },
+    switchTurns({commit}, player1) {
+      commit('switchTurns', player1.turn)
     }
   }, 
   getters: {
-    getPlayerForm(state) {
-      return state.playerForm;
+    getPlayerOneInfo(state) {
+      return state.playerOneInfo;
     },
-    getPlayerScore(state) {
-      return state.playerOneScore;
+    getPlayerTwoInfo(state) {
+      return state.playerTwoInfo;
     },
     getCards(state) {
       return state.cards;

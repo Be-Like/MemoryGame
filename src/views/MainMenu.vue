@@ -29,17 +29,17 @@
         <v-container grid-list-md>
           <v-layout wrap>
             <v-flex xs12 sm6 md6>
-              <v-text-field :rules="[rules.required]" label="Player 1 Name" v-model="playerForm.playerOneName"/>
+              <v-text-field :rules="[rules.required]" label="Player 1 Name" v-model="playerOneInfo.name"/>
             </v-flex>
             <v-flex xs12 sm6 md6>
-              <v-text-field :rules="[rules.required]" label="Player 2 Name" v-model="playerForm.playerTwoName"/>
+              <v-text-field :rules="[rules.required]" label="Player 2 Name" v-model="playerTwoInfo.name"/>
             </v-flex>
           </v-layout>
         </v-container>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" flat @click="dialog = false">Close</v-btn>
-          <v-btn color="blue darken-1" :disabled="isValidPlayerInfo" flat @click="savePlayerInfo(playerForm)">Save</v-btn>
+          <v-btn color="blue darken-1" :disabled="isValidPlayerInfo" flat @click="savePlayerInfo(playerOneInfo, playerTwoInfo)">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -59,21 +59,22 @@ export default {
         {text: 'Absurd', url: '/'}
       ],
       dialog: false,
-      playerForm: {
-        playerOneName: '',
-        playerTwoName: ''
+      playerOneInfo: {
+        name: '',
+        score: 0
+      },
+      playerTwoInfo: {
+        name: '',
+        score: 0
       }
     }),
     computed: {
-      getPlayerForm() {
-        return this.$store.state.playerForm;
-      },
       getRandomTest() {
         return this.$store.getters.getRandomTest;
       },
       isValidPlayerInfo() {
-        var user1 = this.playerForm.playerOneName;
-        var user2 = this.playerForm.playerTwoName;
+        var user1 = this.playerOneInfo.name;
+        var user2 = this.playerTwoInfo.name;
 
         if (user1 && user2) {
           return false;
@@ -86,12 +87,13 @@ export default {
       testAlert(player) {
         alert(JSON.stringify(player));
       },
-      savePlayerInfo(playerInfo) {
-        var user1 = playerInfo.playerOneName;
-        var user2 = playerInfo.playerTwoName;
+      savePlayerInfo(player1, player2) {
+        var user1 = player1.name;
+        var user2 = player2.name;
 
         if (user1 && user2) {
-          this.$store.commit('updatePlayerNames', playerInfo);
+          this.$store.commit('setPlayerOneInfo', player1);
+          this.$store.commit('setPlayerTwoInfo', player2);
           this.dialog = false;          
         }
       }

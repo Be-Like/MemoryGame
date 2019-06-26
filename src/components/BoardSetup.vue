@@ -19,11 +19,11 @@ export default {
   }, 
   computed: {
     ...mapGetters([
-      'getCards'
+      'getCards', 'getPlayerOneInfo'
     ])
   }, 
   methods: {
-    ...mapActions(['flipCards', 'cardsMatch']),
+    ...mapActions(['flipCards', 'cardsMatch', 'switchTurns']),
     onRevealed(revealedCard) {
       // if (this.status === STATUS.READY) {
       //   this.updateStatus(STATUS.PLAYING);
@@ -34,11 +34,15 @@ export default {
       if (this.lastCard !== revealedCard 
         && this.lastCard.cardName === revealedCard.cardName) {
           this.lastCard = null;
-          this.cardsMatch(); // TODO: work on player turns (boolean or currentPlayer data or something along those lines)
-          return this.leftMatched; // TODO:uncomment this-> || this.updateStatus(STATUS.PASS);
+          this.cardsMatch(this.getPlayerOneInfo); // TODO: work on player turns (boolean or currentPlayer data or something along those lines)
+          this.switchTurns(this.getPlayerOneInfo);
+          console.log("Switch Turns " + JSON.stringify(this.getPlayerOneInfo))
+          return; // TODO:uncomment this-> || this.updateStatus(STATUS.PASS);
       }
       const lastCard = this.lastCard;
       this.lastCard = null;
+      this.switchTurns(this.getPlayerOneInfo);
+      console.log("Switch Turns " + JSON.stringify(this.getPlayerOneInfo))
       setTimeout(() => {
         this.flipCards([lastCard, revealedCard])
       }, 1000);
