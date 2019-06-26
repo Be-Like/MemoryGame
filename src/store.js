@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     playerOneInfo: { // TODO: fix up code to handle these instead
       name: 'Player1',
-      turn: true,
+      turn: false,
       score: 0
     },
     playerTwoInfo: {
@@ -16,7 +16,7 @@ export default new Vuex.Store({
       turn: false,
       score: 0
     },
-    playersTurn: '',
+    totalMatchesLeft: 8,
     cards: []
   },
   mutations: {
@@ -32,6 +32,11 @@ export default new Vuex.Store({
       state.cards = passedCardArray;
       state.playerOneInfo.score = 0;
       state.playerTwoInfo.score = 0;
+      state.totalMatchesLeft = 8;
+    },
+    setInitialPlayerTurn(state, randomTurn) {
+      state.playerOneInfo.turn = randomTurn;
+      state.playerTwoInfo.turn = !randomTurn;      
     },
     reveal(state, card) {
       var c = state.cards.find(selectedCard => selectedCard === card);
@@ -43,9 +48,11 @@ export default new Vuex.Store({
     },
     playerOneMatch(state) {
       state.playerOneInfo.score++; // TODO: update score depending on whose turn it is
+      state.totalMatchesLeft--;
     },
     playerTwoMatch(state) {
       state.playerTwoInfo.score++;
+      state.totalMatchesLeft--;
     },
     switchTurns(state, isTurn) {
       state.playerOneInfo.turn = !isTurn;
@@ -68,7 +75,15 @@ export default new Vuex.Store({
     reset({commit}) {
       const cardNames = ['card1', 'card2', 'card3', 'card4', 'card5', 'card6', 'card7', 'card8'];
       var shuffledCards = shuffle(cardNames.concat(cardNames)).map(name => ({revealed: false, cardName: name}));
+      var x = Math.floor(Math.random() * 2);
+      var player1Turn;
+      if (x < 1) {
+        player1Turn = true;
+      } else {
+        player1Turn = false;
+      }
       commit('resetBoard', shuffledCards);
+      commit('setInitialPlayerTurn', player1Turn);
     },
     cardsMatch({commit}, player1) {
       if (player1.turn) {
@@ -90,6 +105,9 @@ export default new Vuex.Store({
     },
     getCards(state) {
       return state.cards;
+    }, 
+    getTotalMatches(state) {
+      return state.totalMatchesLeft;
     }
   }
 })

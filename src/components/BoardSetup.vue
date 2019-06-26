@@ -25,16 +25,13 @@ export default {
   methods: {
     ...mapActions(['flipCards', 'cardsMatch', 'switchTurns']),
     onRevealed(revealedCard) {
-      // if (this.status === STATUS.READY) {
-      //   this.updateStatus(STATUS.PLAYING);
-      // }
       if (!this.lastCard) {
         return (this.lastCard = revealedCard);
       }
       if (this.lastCard !== revealedCard 
         && this.lastCard.cardName === revealedCard.cardName) {
           this.lastCard = null;
-          this.cardsMatch(this.getPlayerOneInfo); // TODO: work on player turns (boolean or currentPlayer data or something along those lines)
+          this.cardsMatch(this.getPlayerOneInfo);
           this.switchTurns(this.getPlayerOneInfo);
           console.log("Switch Turns " + JSON.stringify(this.getPlayerOneInfo))
           return; // TODO:uncomment this-> || this.updateStatus(STATUS.PASS);

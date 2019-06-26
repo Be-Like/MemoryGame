@@ -1,8 +1,7 @@
 <template>
   <v-container class="status-bar">
-    <h2>{{playerOneInfo.name}}<br>{{playerOneInfo.score}}</h2>
-    <div class="vr"></div>
-    <h2>{{playerTwoInfo.name}}<br><div align="right">{{playerTwoInfo.score}}</div></h2>
+    <h2 :class="{player1Turn: playerOneInfo.turn, getWinningPlayer}">{{playerOneInfo.name}}<br>{{playerOneInfo.score}}</h2>
+    <h2 :class="{player2Turn: playerTwoInfo.turn}">{{playerTwoInfo.name}}<br><div align="right">{{playerTwoInfo.score}}</div></h2>
   </v-container>
 </template>
 
@@ -12,24 +11,32 @@ export default {
   data: () => ({
     playerOneInfo: {
       name: '',
+      turn: false,
       score: 0
     },
     playerTwoInfo: {
       name: '',
+      turn: false,
       score: 0
     }
   }),
-  methods: {
-    
-  },
+  // props: ['winningPlayer'], TODO: may be able to delete this if there aren't any issues that arise.
   computed: {
-    ...mapGetters(['getPlayerOneInfo', 'getPlayerTwoInfo'])
+    ...mapGetters(['getPlayerOneInfo', 'getPlayerTwoInfo']),
+    getWinningPlayer() {
+      if (this.playerOneInfo.score > this.playerTwoInfo.score) {
+        this.$emit('winner', this.playerOneInfo.name);
+      } else if (this.playerOneInfo.score < this.playerTwoInfo.score){
+        this.$emit('winner', this.playerTwoInfo.name);
+      } else {
+        this.$emit('winner', null)
+      }
+      return null;
+    }
   },
   mounted() {
     this.playerOneInfo = this.getPlayerOneInfo;
     this.playerTwoInfo = this.getPlayerTwoInfo;
-
-    // alert(JSON.stringify(this.playerOneInfo))
   }
 }
 </script>
@@ -41,6 +48,12 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  .player1Turn {
+    color: red
+  }
+  .player2Turn {
+    color: blue
   }
 </style>
 
