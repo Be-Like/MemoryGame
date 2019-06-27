@@ -1,6 +1,6 @@
 <template>
   <v-container class="game-panel">
-    <v-toolbar dark>
+    <v-toolbar dark color="#546E7A">
       <v-toolbar-title>Welcome to an Easy Game of Memory</v-toolbar-title>
     </v-toolbar>
     <game-header @winner="updateCurrentWinner" @player1IsWinner="updateIsWinner"/>
@@ -14,12 +14,10 @@
        v-if="getTotalMatches == 0 && !currentWinner">
        <h1 class="winnerText tie">Alas, it has come down to a tie...</h1>
     </div>
-    <v-footer dark>
-      <div align="right">
+    <v-footer justify-center dark color="#546E7A" align="right">
         <v-btn @click.stop="confirmReset = true" flat>Reset</v-btn>
         <!-- <v-btn @click.stop="reset" flat>Reset</v-btn> -->
-        <v-btn @click.stop="confirmExit = true">Main Menu</v-btn>
-      </div>
+        <v-btn @click.stop="confirmExit = true" flat>Main Menu</v-btn>
     </v-footer>
     
 
@@ -134,9 +132,8 @@ export default {
     background-size: cover;
   }
   .game-panel {
-    width: 450px;
-    height: 670px;
-    background-color: gray;
+    background-color: rgba(214, 219, 223, 1);
+    background-image: url(../assets/mainScreen.jpg);
     padding: 10px;
     display: flex;
     flex-direction: column;

@@ -1,6 +1,8 @@
 <template>
   <v-container class="boardSetup">
-    <game-card v-for="(card, index) of getCards" :key="index" :selected="card" @revealed="onRevealed"/>
+    <v-flex v-for="(card, index) of getCards" :key="index" xs3>
+      <game-card :selected="card" @revealed="onRevealed"/>
+    </v-flex>
   </v-container>
 </template>
 
@@ -52,7 +54,6 @@ export default {
   .boardSetup {
     margin-top: 20px;
     width: 100%;
-    background-color: #fff;
     height: 530px;
     border-radius: 4px;
     padding: 10px 5px;
