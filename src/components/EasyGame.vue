@@ -15,8 +15,8 @@
        <h1 class="winnerText tie">Alas, it has come down to a tie...</h1>
     </div>
     <v-footer justify-center dark color="#546E7A" align="right">
+      <v-spacer></v-spacer>
         <v-btn @click.stop="confirmReset = true" flat>Reset</v-btn>
-        <!-- <v-btn @click.stop="reset" flat>Reset</v-btn> -->
         <v-btn @click.stop="confirmExit = true" flat>Main Menu</v-btn>
     </v-footer>
     

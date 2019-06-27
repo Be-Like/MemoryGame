@@ -45,6 +45,10 @@
         </v-card>
       </v-dialog>
     </div>
+    <v-footer absolute color="#000000" dark class="pa-3">
+      <v-spacer></v-spacer>
+      <a href="https://github.com/Be-Like/MemoryGame.git" class="footer-link">Jake Simpson: Memory Game Repo</a>
+    </v-footer>
   </v-container>
 </template>
 
@@ -116,6 +120,7 @@ export default {
     background-position: center;
     background-size: cover;
     position: relative;
+    overflow: hidden;
   }
   .hero-text-centered {
     text-align: center;
@@ -125,6 +130,9 @@ export default {
   transform: translate(-50%, -50%);
   }
   .hero-text {
+    color: white;
+  }
+  .footer-link {
     color: white;
   }
 </style>
