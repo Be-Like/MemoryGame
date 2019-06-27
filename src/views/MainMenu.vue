@@ -1,5 +1,8 @@
 <template>
   <v-container text-xs-center wrap>
+    <div>
+      
+    </div>
     <v-flex mb-4>
       <h1>UNION {{ getRandomTest }}</h1>
       <h2>Yeah... It's a Memory Game</h2>
@@ -53,10 +56,7 @@ export default {
           required: value => !!value || 'Required.',
       },
       gameModes: [
-        {text: 'Easy', url: 'easy'},
-        {text: 'Normal', url: 'normal'},
-        {text: 'Hard', url: '/hard'}, 
-        {text: 'Absurd', url: '/'}
+        {text: "Let's Get Started", url: 'easy'}
       ],
       dialog: false,
       playerOneInfo: {

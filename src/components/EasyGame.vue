@@ -1,14 +1,63 @@
 <template>
   <v-container class="game-panel">
-    <router-link tag="h2" to="/">Welcome to an Easy Game of Memory</router-link>
+    <v-toolbar dark>
+      <v-toolbar-title>Welcome to an Easy Game of Memory</v-toolbar-title>
+    </v-toolbar>
     <game-header @winner="updateCurrentWinner" @player1IsWinner="updateIsWinner"/>
     <board-setup class=""/>
-    <div class="winnerBanner test" 
+    <div class="winnerBanner" 
       :class="{player1IsWinner: player1IsWinner, player2IsWinner: !player1IsWinner}"
-       v-if="getTotalMatches == 0">
-      <h1 class="winnerText" >{{currentWinner}} is the winner!</h1>
+       v-if="getTotalMatches == 0 && currentWinner">
+       <h1 class="winnerText" >{{currentWinner}} is the winner!</h1>
     </div>
-    <v-btn @click="reset">Reset</v-btn>
+    <div class="winnerBanner tie" 
+       v-if="getTotalMatches == 0 && !currentWinner">
+       <h1 class="winnerText tie">Alas, it has come down to a tie...</h1>
+    </div>
+    <v-footer dark>
+      <div align="right">
+        <v-btn @click.stop="confirmReset = true" flat>Reset</v-btn>
+        <!-- <v-btn @click.stop="reset" flat>Reset</v-btn> -->
+        <v-btn @click.stop="confirmExit = true">Main Menu</v-btn>
+      </div>
+    </v-footer>
+    
+
+    <!-- Confirmation Dialogs -->
+    <v-dialog v-model="confirmReset" max-width="290">
+      <v-card>
+        <v-card-title class="headline">Reset</v-card-title>
+        <v-card-text>
+          Are you sure you want to reset? Current game data will be erased.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click="confirmReset = false">
+            cancel
+          </v-btn>
+          <v-btn color="green darken-1" flat="flat" @click="confirmedReset">
+            reset
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="confirmExit" max-width="290">
+      <v-card>
+        <v-card-title class="headline">Are you sure you want to leave?</v-card-title>
+        <v-card-text>
+          Current game data will be erased and you will return to the main menu.
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click="confirmExit = false">
+            cancel
+          </v-btn>
+          <v-btn color="green darken-1" flat="flat" @click="confirmExit = false" to="/">
+            Exit
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -24,7 +73,9 @@ export default {
   },
   data: () => ({
     currentWinner: '',
-    player1IsWinner: null
+    player1IsWinner: null,
+    confirmReset: false,
+    confirmExit: false
   }),
   computed: {
     ...mapGetters(['getCards', 'getTotalMatches'])
@@ -34,13 +85,17 @@ export default {
     showCards() {
       alert(JSON.stringify(this.getCards));
     },
-    updateCurrentWinner(currentWinner, isWinner) {
+    updateCurrentWinner(currentWinner) {
       console.log("update current winner " + currentWinner);
       this.currentWinner = currentWinner;
     },
     updateIsWinner(isWinner) {
       console.log("update Is Winner " + isWinner)
       this.player1IsWinner = isWinner;      
+    },
+    confirmedReset() {
+      this.confirmReset = false;
+      this.reset();
     }
   },
   created() {
@@ -55,6 +110,10 @@ export default {
     position: relative;
     text-align: center;
   }
+  .winnerText.tie {
+    color: white;
+    text-align: start;
+  }
   .winnerBanner {
     width: 100%;
     height: 50%;
@@ -63,6 +122,10 @@ export default {
     left: 0;
     z-index: 10;
   }
+  .winnerBanner.tie {
+    background-image: url(../assets/gameTie.jpg);
+    background-size: cover;
+  }
   .winnerBanner.player1IsWinner {
     background-image: url(../assets/redWinner.jpg);
   }
@@ -70,13 +133,13 @@ export default {
     background: url(../assets/blueWinner.jpg);
     background-size: cover;
   }
-
   .game-panel {
-  width: 450px;
-  height: 670px;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-}
+    width: 450px;
+    height: 670px;
+    background-color: gray;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
 </style>
 
