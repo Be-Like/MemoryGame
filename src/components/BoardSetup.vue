@@ -60,20 +60,9 @@ export default {
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    align-content: space-around;
+    align-content: space-around; 
   }
   .container:nth-child(4n) {
     margin-right: 0px;
-  }
-  @media screen and (max-width: 450px) {
-    .boardSetup {
-      height: 480px;
-      padding: 10px 0px;
-    }
-  }
-  @media screen and (max-width: 370px) {
-    .boardSetup {
-      height: 450px;
-    }
   }
 </style>

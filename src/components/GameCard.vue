@@ -74,26 +74,5 @@ export default {
   .card .faceUp {
     transform: rotateY(180deg);
   }
-  @media screen and (max-width: 450px) {
-    .cardContainer {
-      width: 92px;
-      height: 111px;
-      margin-right: 1px;
-    }
-  }
-  @media screen and (max-width: 380px) {
-    .cardContainer {
-      width: 85px;
-      height: 102px;
-      margin-right: 1px;
-    }
-  }
-  @media screen and (max-width: 360px) {
-    .cardContainer {
-      width: 70px;
-      height: 84px;
-      margin-right: 1px;
-    }
-  }
 </style>
 
