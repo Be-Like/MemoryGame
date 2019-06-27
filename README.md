@@ -1,5 +1,9 @@
-# memory_game
+# Memory Game
 https://be-like.github.io/MemoryGame/
+
+## Note
+
+You will see that there are some files that are not being utilized as you look through the code. This is because I had intentions to add a couple of other features, but didn't quite find enough time to implement and test them as I wanted prior to the time I agreed to turn it in. This doesn't affect the user interaction with the application, just adds some files that should you look into the code you will see aren't being used.
 
 ## Project setup
 ```
